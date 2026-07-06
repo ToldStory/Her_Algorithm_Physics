@@ -1,0 +1,477 @@
+\documentclass[11pt]{article}
+
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,longtable,array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{xcolor}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{proposition}{Proposition}
+\newtheorem{definition}{Definition}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{remark}{Remark}
+
+\newcommand{\HA}{Her Algorithm}
+\newcommand{\Id}{\mathbf{1}}
+\newcommand{\Uone}{U(1)}
+\newcommand{\Sutwo}{SU(2)}
+\newcommand{\Rijk}{R_{ijk}}
+\newcommand{\Hijk}{H_{ijk}}
+\newcommand{\Wij}{W_{abcd}}
+\newcommand{\Fxy}{F_{xy}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\tr}{\operatorname{tr}}
+\newcommand{\Ad}{\operatorname{Ad}}
+
+\title{\textbf{Her Algorithm and Gauge-Compatible Re-Anchoring}\\
+\large From Shared-Origin Cancellation to Lattice Holonomy and Curvature Scaling}
+\author{Tre Nelson\\\small Her\_Algorithm\_Physics}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper gives a current-state account of \emph{Her Algorithm} as implemented in the repository \texttt{Her\_Algorithm\_Physics}.  The central object is an exact re-anchoring identity for group-valued relational data: from two relations sharing a source anchor, one can recover the relation between their targets.  In group notation,
+\[
+(A^{-1}B)^{-1}(A^{-1}C)=B^{-1}C.
+\]
+The identity does not require commutativity, and therefore naturally extends from Abelian examples to non-Abelian groups, groupoids, local transition systems, and lattice-gauge-style link fields.  The repository now verifies this structure through a sequence of computational layers: \(\Uone\) gauge re-anchoring, \(\Sutwo\) non-Abelian covariance, plaquette/holonomy reconstruction, a smooth \(\Uone\) curvature scaling limit, and a smooth \(\Sutwo\) curvature scaling limit.  The current results support a disciplined claim: \HA{} is a gauge-compatible relational diagnostic whose triangle residuals vanish on pure gauges, detect perturbations, transform correctly under local gauge transformations, reconstruct plaquette holonomy after diagonal splitting and basepoint bookkeeping, and reproduce expected curvature-times-area behavior in controlled refinement tests.  The paper does not claim that \HA{} is a new physical law or a replacement for gauge theory.  It establishes a precise mathematical and computational bridge between relational re-anchoring and standard lattice-gauge diagnostics.
+\end{abstract}
+
+\tableofcontents
+
+\section{Purpose and Claim Boundary}
+
+The purpose of this paper is to state exactly what has been established by the current \texttt{Her\_Algorithm\_Physics} codebase, and to separate those results from stronger claims that remain unproven.
+
+The working thesis is
+\[
+\boxed{\text{\HA{} is a discrete re-anchoring procedure for group-valued relational fields.}}
+\]
+The exact theorem-level statement is narrower and stronger:
+\[
+\boxed{\text{where inverse and composition exist, shared-origin relations can be re-anchored exactly.}}
+\]
+
+The present work supports the following claim:
+
+\begin{quote}
+\HA{} is an exact relational identity for group-valued data.  In lattice-gauge-style systems, it defines triangle consistency residuals that vanish on pure gauges, detect perturbations, transform correctly under local gauge transformations, reconstruct plaquette holonomy, and reproduce expected curvature-times-area scaling in smooth \(\Uone\) and \(\Sutwo\) synthetic refinement tests.
+\end{quote}
+
+The present work does \emph{not} support the following stronger claims:
+\begin{enumerate}[leftmargin=1.5em]
+\item that \HA{} is a new physical law;
+\item that \HA{} replaces gauge theory;
+\item that \HA{} solves quantum field theory;
+\item that triangle residuals are literally curvature in every setting;
+\item that the method automatically applies to non-invertible systems without additional structure.
+\end{enumerate}
+
+The safe public posture is therefore:
+\[
+\boxed{\text{\HA{} is a precise gauge-compatible relational diagnostic, not yet a physical theory.}}
+\]
+
+\section{Gauge Theory as Local Re-Description}
+
+Gauge theory is built around the distinction between local description and invariant content.  Local frames may be changed without changing the underlying physical object.  In modern language, one studies fields, connections, transition functions, holonomy, curvature, and gauge transformations.  Weyl's work helped establish gauge invariance as a structural principle \cite{weyl1929gravitation}; Yang and Mills introduced non-Abelian gauge invariance \cite{yangmills1954}; Utiyama connected interactions with invariant/gauge-theoretic structure \cite{utiyama1956}; and Wilson's lattice formulation made finite link variables and loop observables central to nonperturbative gauge theory \cite{wilson1974}.
+
+The present project does not modify these foundations.  Instead, it asks a narrower question:
+\[
+\boxed{\text{What does shared-origin re-anchoring become inside lattice-gauge-style link fields?}}
+\]
+
+This question is natural because lattice gauge theory already represents comparison between neighboring sites by group-valued link variables.  A local change of frame changes the representation of links, but not gauge-invariant observables such as Wilson loops.  \HA{} enters this setting as a method for comparing two relations that share the same source and recovering the relation between their targets.
+
+\section{The Algebraic Core}
+
+\begin{definition}[Group relation]
+Let \(G\) be a group.  For \(A,B\in G\), define the relation from \(A\) to \(B\) by
+\[
+\Phi(A,B)=A^{-1}B.
+\]
+For two relations \(X,Y\in G\), define their comparison by
+\[
+\Psi(X,Y)=X^{-1}Y.
+\]
+\end{definition}
+
+\begin{theorem}[Shared-origin cancellation]
+For every group \(G\) and all \(A,B,C\in G\),
+\[
+\Psi(\Phi(A,B),\Phi(A,C))=\Phi(B,C).
+\]
+Equivalently,
+\[
+(A^{-1}B)^{-1}(A^{-1}C)=B^{-1}C.
+\]
+\end{theorem}
+
+\begin{proof}
+By definition,
+\[
+\Psi(\Phi(A,B),\Phi(A,C))=(A^{-1}B)^{-1}(A^{-1}C).
+\]
+Since \((A^{-1}B)^{-1}=B^{-1}A\),
+\[
+(A^{-1}B)^{-1}(A^{-1}C)=(B^{-1}A)(A^{-1}C)=B^{-1}C.
+\]
+Thus the common source \(A\) cancels exactly.
+\end{proof}
+
+\begin{remark}[Plain-language form]
+If one knows the relation \(A\to B\) and the relation \(A\to C\), then one can recover the relation \(B\to C\):
+\[
+\boxed{A\to B,\quad A\to C\quad \Longrightarrow \quad B\to C.}
+\]
+This is the mathematical heart of \HA{}.
+\end{remark}
+
+The theorem is independent of commutativity.  This matters because the transition from \(\Uone\) to \(\Sutwo\) is precisely the transition from Abelian to non-Abelian behavior.
+
+\section{Groupoid Form}
+
+Groups are sufficient for the simplest theorem, but local geometry often requires many objects and partially defined composition.  Groupoids express this naturally.
+
+Let
+\[
+f:A\to B,\qquad g:A\to C
+\]
+be arrows in a groupoid.  If \(f^{-1}:B\to A\) exists, then
+\[
+g\circ f^{-1}:B\to C
+\]
+is defined.  Thus the groupoid form of \HA{} is
+\[
+\boxed{(A\to C)\circ(A\to B)^{-1}=B\to C.}
+\]
+
+This form clarifies why the identity is relevant to local charts, transition functions, frame comparisons, and gauge patches.  The operation is exact when the relevant arrows exist and compose.  If inverse or composition fails, the operation is undefined rather than false.
+
+\section{From Re-Anchoring to Lattice Links}
+
+Let a finite graph or lattice have group-valued link variables \(U_{ij}\in G\), interpreted as a relation from site \(i\) to site \(j\).  A pure gauge field can be written using site frames \(T_i\in G\):
+\[
+U_{ij}=T_i^{-1}T_j.
+\]
+Then for three sites \(i,j,k\),
+\[
+U_{ij}^{-1}U_{ik}=(T_i^{-1}T_j)^{-1}(T_i^{-1}T_k)=T_j^{-1}T_k=U_{jk}.
+\]
+
+This motivates the triangle re-anchoring residual
+\[
+\Rijk=U_{jk}^{-1}U_{ij}^{-1}U_{ik}.
+\]
+For a pure gauge triangle, \(\Rijk=\Id\).  Nonzero deviation from \(\Id\) measures failure of the relation \(U_{ij}^{-1}U_{ik}=U_{jk}\).
+
+There are two equivalent ways to view the residual:
+\begin{enumerate}[leftmargin=1.5em]
+\item as a \emph{triangle consistency defect}, because it measures failure of shared-source re-anchoring;
+\item as a basepoint-shifted expression of triangular holonomy, as explained below.
+\end{enumerate}
+
+\section{Gauge Transformations}
+
+A local gauge transformation assigns a group element \(h_i\in G\) to each site and transforms links by
+\[
+U_{ij}\mapsto U'_{ij}=h_i^{-1}U_{ij}h_j.
+\]
+
+\subsection{The Abelian case}
+
+For \(G=\Uone\), all group elements commute.  Under local \(\Uone\) transformations, the scalar residual diagnostics are invariant.  Thus, in the Abelian case, it is appropriate to say that the residual is gauge-invariant.
+
+\subsection{The non-Abelian case}
+
+For \(G=\Sutwo\), residual matrices are not expected to remain literally equal after a local gauge transformation.  Instead, the residual transforms by conjugation at the appropriate endpoint:
+\[
+\Rijk \mapsto \Rijk' = h_k^{-1}\Rijk h_k,
+\]
+up to the convention used for orienting the residual.  Thus the residual is gauge-covariant, not literally invariant.
+
+Consequently, conjugacy-invariant quantities such as
+\[
+\tr(\Rijk),\qquad \|\Rijk-\Id\|_F,\qquad \text{rotation angle}(\Rijk)
+\]
+are the correct gauge-invariant diagnostics.
+
+\begin{remark}[Important distinction]
+In \(\Uone\), one may safely say: ``the residual is invariant.''  In \(\Sutwo\), one must say: ``the residual transforms covariantly by conjugation, while conjugacy-invariant observables remain invariant.''  The second statement is stronger and more geometrically honest.
+\end{remark}
+
+\section{Triangle Holonomy and Plaquette Reconstruction}
+
+For a triangle \((i,j,k)\), define the triangular holonomy
+\[
+\Hijk=U_{ij}U_{jk}U_{ki}.
+\]
+The Her residual
+\[
+\Rijk=U_{jk}^{-1}U_{ij}^{-1}U_{ik}
+\]
+is not identical to \(\Hijk\).  However, since \(U_{ki}=U_{ik}^{-1}\), one obtains the exact relation
+\[
+\Hijk = U_{ij}\Rijk^{-1}U_{ij}^{-1}.
+\]
+Thus \(\Rijk\) is an inverted, basepoint-shifted version of the triangular holonomy.
+
+Now consider a square plaquette with vertices \((a,b,c,d)\).  The standard plaquette holonomy is
+\[
+\Wij=U_{ab}U_{bc}U_{cd}U_{da}.
+\]
+If the square is split into two triangles along the diagonal \((a,c)\), then
+\[
+H_{abc}=U_{ab}U_{bc}U_{ca},
+\]
+\[
+H_{acd}=U_{ac}U_{cd}U_{da}.
+\]
+Multiplying gives
+\[
+H_{abc}H_{acd}=U_{ab}U_{bc}(U_{ca}U_{ac})U_{cd}U_{da}
+=U_{ab}U_{bc}U_{cd}U_{da}
+=\Wij.
+\]
+Therefore,
+\[
+\boxed{\Wij=H_{abc}H_{acd}.}
+\]
+Since each triangular holonomy can be reconstructed from the corresponding Her residual, Her residuals reconstruct the standard plaquette holonomy after diagonal splitting, inversion, and basepoint bookkeeping.
+
+\begin{remark}[Boundary of the claim]
+The residual \(\Rijk\) is not being claimed to be ``the curvature'' by itself.  The established statement is more precise: Her residuals reconstruct the triangular holonomies from which the plaquette holonomy is recovered.
+\end{remark}
+
+\section{Established Computational Layers}
+
+The current repository verifies five computational layers.  These are summarized below.
+
+\subsection{Layer 1: \(\Uone\) gauge re-anchoring}
+
+The first experiment implements Her re-anchoring in finite \(\Uone\) link fields.  For pure gauges, residuals vanish to numerical precision.  Sparse synthetic perturbations create nonzero residuals, and the largest residuals localize triangles adjacent to corrupted links.
+
+Representative result:
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Diagnostic & Result \\
+\midrule
+Pure gauge max residual angle & \(\sim 10^{-16}\) \\
+Perturbed max residual angle & nonzero, order \(10^{-1}\) to \(1\) \\
+Gauge transformation error & \(\sim 10^{-16}\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Established statement:
+\begin{quote}
+In finite \(\Uone\) link fields, Her re-anchoring defines a triangle consistency residual that vanishes for pure gauges, detects synthetic perturbations, and remains invariant under local \(\Uone\) gauge transformations.
+\end{quote}
+
+\subsection{Layer 2: \(\Sutwo\) non-Abelian covariance}
+
+The second experiment extends the construction to \(\Sutwo\).  Here multiplication is noncommutative, so residual matrices need not remain literally equal under local gauge transformations.  The test confirms the expected behavior: residuals change by endpoint conjugation, while conjugacy-invariant observables remain invariant.
+
+Representative result:
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Diagnostic & Result \\
+\midrule
+Pure gauge max residual & \(\sim 10^{-15}\) \\
+Perturbed max residual & nonzero \\
+Covariance error & \(\sim 10^{-15}\) \\
+Literal residual matrix change & order \(1\) \\
+Trace invariance error & \(\sim 10^{-15}\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Established statement:
+\begin{quote}
+In finite \(\Sutwo\) link fields, Her re-anchoring defines a non-Abelian triangle consistency residual.  It vanishes for pure gauges and transforms covariantly under local \(\Sutwo\) gauge transformations.  Conjugacy-invariant diagnostics remain gauge-invariant.
+\end{quote}
+
+\subsection{Layer 3: plaquette and holonomy compatibility}
+
+The third experiment compares Her triangle residuals against standard plaquette holonomy.  In both \(\Uone\) and \(\Sutwo\), square plaquette holonomy is reconstructed from two Her-reconstructed triangular holonomies.
+
+Representative result:
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Diagnostic & Result \\
+\midrule
+\(\Uone\) Her reconstruction error & \(\sim 10^{-16}\) \\
+\(\Sutwo\) Her reconstruction error & \(\sim 10^{-15}\) \\
+\(\Uone\) gauge invariance error & \(\sim 10^{-16}\) \\
+\(\Sutwo\) covariance error & \(\sim 10^{-15}\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Established statement:
+\begin{quote}
+Her triangle residuals are plaquette-compatible.  When a square plaquette is decomposed into two triangles, Her residuals reconstruct the standard plaquette holonomy up to numerical precision, after inversion and basepoint bookkeeping.
+\end{quote}
+
+\subsection{Layer 4: smooth \(\Uone\) curvature scaling}
+
+The fourth experiment tests whether Her-reconstructed plaquette holonomy behaves like a curvature diagnostic under lattice refinement.  A smooth synthetic \(\Uone\) connection is generated, the plaquette angle divided by area is compared against analytic curvature \(\Fxy\), and the RMS error is measured as grid spacing \(h\) decreases.
+
+The observed log-log convergence slope is
+\[
+1.995,
+\]
+which is essentially second-order convergence.
+
+Representative refinement data:
+\begin{center}
+\begin{tabular}{ccc}
+\toprule
+Grid size & \(h\) & RMS curvature error \\
+\midrule
+8  & 0.14286 & \(3.399\times 10^{-2}\) \\
+12 & 0.09091 & \(1.385\times 10^{-2}\) \\
+16 & 0.06667 & \(7.461\times 10^{-3}\) \\
+24 & 0.04348 & \(3.178\times 10^{-3}\) \\
+32 & 0.03226 & \(1.750\times 10^{-3}\) \\
+48 & 0.02128 & \(7.615\times 10^{-4}\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Established statement:
+\begin{quote}
+In a smooth synthetic \(\Uone\) connection, the Her-reconstructed plaquette holonomy reproduces the expected curvature-times-area behavior under lattice refinement, with approximately second-order convergence.
+\end{quote}
+
+\subsection{Layer 5: smooth \(\Sutwo\) curvature scaling}
+
+The fifth experiment repeats the curvature-scaling test in a non-Abelian \(\Sutwo\) setting.  This is harder because curvature is Lie-algebra valued, link multiplication is noncommutative, and direct vector comparison depends on basepoint convention and parallel transport.
+
+The experiment compares two diagnostics:
+\begin{enumerate}[leftmargin=1.5em]
+\item a direct Lie-algebra vector comparison using the principal logarithm of plaquette holonomy;
+\item a conjugacy-invariant norm diagnostic.
+\end{enumerate}
+
+Representative result:
+\begin{center}
+\begin{tabular}{ll}
+\toprule
+Diagnostic & Estimated convergence slope \\
+\midrule
+Direct Lie-algebra vector comparison & \(0.955\) \\
+Conjugacy-invariant norm comparison & \(1.992\) \\
+\bottomrule
+\end{tabular}
+\end{center}
+
+The direct vector comparison converges more slowly because it compares Lie-algebra vectors that are not explicitly parallel-transported into a common basepoint fiber.  This is not a failure of the gauge structure; it is the expected non-Abelian subtlety.  The conjugacy-invariant norm diagnostic avoids this basepoint mismatch and shows near-second-order scaling.
+
+Established statement:
+\begin{quote}
+In a smooth synthetic \(\Sutwo\) connection, Her-reconstructed plaquette holonomy follows the expected non-Abelian curvature-times-area behavior.  The conjugacy-invariant curvature norm shows near-second-order refinement behavior, while direct Lie-algebra vector comparison exposes the expected non-Abelian basepoint and parallel-transport subtlety.
+\end{quote}
+
+\section{Current Verified Test State}
+
+The current codebase includes tests for:
+\begin{enumerate}[leftmargin=1.5em]
+\item \(\Uone\) gauge re-anchoring;
+\item \(\Sutwo\) non-Abelian covariance;
+\item plaquette/holonomy reconstruction;
+\item smooth \(\Uone\) curvature scaling;
+\item smooth \(\Sutwo\) curvature scaling.
+\end{enumerate}
+
+The current validated test state is
+\[
+\boxed{31\text{ tests passed}.}
+\]
+
+This matters because the project has moved beyond informal analogy.  It now contains reproducible computational tests supporting precise claims about relational re-anchoring, gauge covariance, plaquette compatibility, and curvature scaling behavior.
+
+\section{Interpretation}
+
+The results suggest that \HA{} should be understood as a relational consistency operator.  It does not introduce a new field equation.  It does not add new dynamics.  Instead, it gives a finite algebraic way to ask:
+\begin{quote}
+If two relations leave the same anchor, what relation should connect their endpoints, and how badly does the available field fail that expectation?
+\end{quote}
+
+In pure gauge fields, the answer is exact and residuals vanish.  In perturbed fields, residuals detect inconsistency.  In non-Abelian fields, residuals transform by conjugation, which is the correct gauge-covariant behavior.  When triangles are assembled into plaquettes, the residuals reconstruct standard holonomy.  Under smooth refinement, the reconstructed holonomy behaves like curvature times area.
+
+This gives the central interpretation:
+\[
+\boxed{\text{\HA{} maps how relations change when the anchor changes.}}
+\]
+In gauge-theoretic terms:
+\[
+\boxed{\text{\HA{} is a finite diagnostic for transition consistency, holonomy reconstruction, and curvature-compatible scaling.}}
+\]
+
+\section{Limitations}
+
+Several limitations remain.
+
+\subsection{Synthetic tests only}
+The current experiments use controlled synthetic fields.  This is appropriate for establishing algebraic and numerical behavior, but it is not evidence that the method has discovered new empirical physics.
+
+\subsection{No dynamics yet}
+The repository tests kinematic and geometric consistency.  It does not yet propose or validate an action principle, field equation, evolution law, quantization procedure, or physical dynamics.
+
+\subsection{Non-invertible systems remain outside the exact domain}
+The exact theorem requires inverse and composition.  Singular matrices, zero-amplitude anchors, irreversible maps, dissipative processes, or many-to-one relations require additional machinery such as generalized inverses, groupoid restrictions, relation semantics, quotient constructions, or probabilistic reconstruction.
+
+\subsection{Non-Abelian basepoints matter}
+The \(\Sutwo\) curvature-scaling layer shows that direct Lie-algebra vector comparison is not automatically gauge-safe.  To compare non-Abelian curvature vectors at different points, one must account for parallel transport and basepoint choice.  Conjugacy-invariant diagnostics avoid part of this issue, but a full basepoint-corrected curvature comparison remains future work.
+
+\section{Future Work}
+
+The next natural directions are:
+\begin{enumerate}[leftmargin=1.5em]
+\item implement explicit non-Abelian parallel transport of analytic curvature to the plaquette basepoint;
+\item compare Her residual localization against standard plaquette-based defect localization;
+\item test clustered and extended perturbations rather than sparse link corruption;
+\item study boundary effects on finite lattices;
+\item examine groupoid-valued fields with partial composition;
+\item investigate non-invertible extensions using generalized inverse or relation-valued semantics;
+\item test whether re-anchoring residuals define useful numerical diagnostics for real discretized field data.
+\end{enumerate}
+
+The most important immediate mathematical refinement is the non-Abelian basepoint problem:
+\[
+\boxed{\text{compare Lie-algebra curvature only after transporting it into a common fiber.}}
+\]
+Solving that would sharpen the \(\Sutwo\) curvature-scaling result from a gauge-invariant norm comparison to a fully basepoint-corrected Lie-algebra comparison.
+
+\section{Conclusion}
+
+The core identity of \HA{} is simple:
+\[
+(A^{-1}B)^{-1}(A^{-1}C)=B^{-1}C.
+\]
+Its significance lies in where it continues to hold: Abelian groups, non-Abelian groups, groupoids, transition systems, and lattice-gauge-style link fields.  In the current repository, the identity has been tested through \(\Uone\), \(\Sutwo\), plaquette holonomy, and curvature scaling experiments.
+
+The strongest current statement is:
+\begin{quote}
+\HA{} is an exact group-valued re-anchoring identity whose lattice residuals are compatible with gauge covariance, plaquette holonomy reconstruction, and curvature-times-area scaling in controlled \(\Uone\) and \(\Sutwo\) tests.
+\end{quote}
+
+The correct restraint is equally important:
+\begin{quote}
+This is not yet a new physical theory.  It is a precise relational structure with verified gauge-compatible behavior.
+\end{quote}
+
+Thus the project has a stable mathematical spine and a clear research path.  It begins with shared-origin cancellation and now reaches a concrete gauge-theoretic diagnostic: a way to measure, reconstruct, and localize relational inconsistency in finite group-valued fields.
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
