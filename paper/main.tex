@@ -1,0 +1,481 @@
+
+\documentclass[11pt]{article}
+\usepackage[margin=1in]{geometry}
+\usepackage{amsmath,amssymb,amsthm,mathtools}
+\usepackage{booktabs,longtable,array}
+\usepackage{hyperref}
+\usepackage{enumitem}
+\hypersetup{colorlinks=true,linkcolor=blue,citecolor=blue,urlcolor=blue}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{conjecture}{Conjecture}
+\newtheorem{definition}{Definition}
+\newtheorem{remark}{Remark}
+\newcommand{\HA}{Her Algorithm}
+\newcommand{\PhiR}{\Phi}
+\newcommand{\PsiI}{\Psi}
+
+\title{\textbf{Her Algorithm and Gauge-Theoretic Re-Anchoring}\\
+\large Relational Fields, Groupoids, Atlas Consistency, and a Program for Discrete Physics}
+\author{Tre Nelson\\\small Her\_Algorithm\_Physics research starter}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+This paper collects the present mathematical and computational evidence for \emph{Her Algorithm} as a finite relational re-anchoring procedure and proposes a research program connecting it to gauge theory, lattice fields, and discrete physics. The original binary construction produced a transpose symmetry in three relational fields \(P1,P2,P3\). Subsequent tests showed that the same structure persists across modular displacement, ratios, complex displacement, unit-circle phase waves, complex amplitude-phase waves, matrix transformations, finite permutation groups, abstract Cayley-table groups, groupoids, and synthetic chart atlases. The central algebraic form is simple: given relations from a shared origin,
+\[
+A\to B,\qquad A\to C,
+\]
+the algorithm recovers the re-anchored relation
+\[
+B\to C.
+\]
+In group notation this is the identity
+\[
+(A^{-1}B)^{-1}(A^{-1}C)=B^{-1}C.
+\]
+In groupoid notation this is the composition of \(A\to C\) with the inverse of \(A\to B\), yielding \(B\to C\). This paper argues that the natural next domain is gauge theory, where local frames, transition functions, covariant comparison, cocycle consistency, and curvature are all questions about how relations change under changes of origin or local trivialization. The claims made here are limited: \HA{} is not asserted to be a new physical law. It is proposed as a discrete relational calculus for constructing, testing, and localizing consistency in gauge-like fields.
+\end{abstract}
+
+\tableofcontents
+
+\section{Purpose and Scope}
+
+The purpose of this document is to prepare a new repository, tentatively named
+\[
+\texttt{Her\_Algorithm\_Physics},
+\]
+for investigating \HA{} in gauge theory and physics.
+
+The working thesis is
+\[
+\boxed{\text{\HA{} is a discrete re-anchoring procedure for relational fields.}}
+\]
+A stronger mathematical statement is
+\[
+\boxed{\text{\HA{} is exact where the required inverse and composition arrows exist.}}
+\]
+This places the exact form naturally in groups, groupoids, local transition systems, and gauge-like structures.
+
+This paper separates four levels of claim:
+\begin{enumerate}[leftmargin=1.5em]
+\item exact algebraic theorem,
+\item computational confirmation in finite models,
+\item synthetic atlas diagnostics,
+\item conjectural physics and gauge-theoretic tests.
+\end{enumerate}
+
+\section{Context: Gauge Theory as Local Re-Description}
+
+Gauge theory is built around local freedom of description. A local frame may change while the physical content remains invariant. Weyl's work helped establish the language of gauge invariance \cite{weyl1929gravitation}; Yang and Mills introduced non-Abelian gauge invariance \cite{yangmills1954}; Utiyama connected interactions with invariant/gauge-theoretic structure \cite{utiyama1956}; Wilson's lattice gauge formulation made finite link variables and loop observables central to nonperturbative gauge theory \cite{wilson1974}.
+
+The present project does not replace those theories. It asks whether \HA{} gives a finite relational mechanism for:
+\begin{itemize}[leftmargin=1.5em]
+\item constructing transition maps,
+\item re-anchoring local descriptions,
+\item testing cocycle consistency,
+\item detecting curvature or holonomy-like defects,
+\item localizing corrupted links or chart transitions.
+\end{itemize}
+
+\section{The Original Three-Field Form}
+
+The original binary form begins with a finite sequence \(s\), reverses it to obtain \(r\), and constructs fields
+\[
+P1_{ij}=r_i\odot r_j,
+\]
+\[
+P2_{ij}=r_i\odot r_{i+j},
+\]
+\[
+P3_{ij}=P1_{ij}\odot P2_{ij},
+\]
+where \(\odot\) is XNOR/agreement and indices are modulo sequence length. The invariant was
+\[
+\boxed{P3=P2^T.}
+\]
+The binary form is now understood as a special case of shared-origin cancellation.
+
+\section{General Relational Form}
+
+Let \(\PhiR(a,b)\) be a relation from state \(a\) to state \(b\), and let \(\PsiI(x,y)\) compare two relations sharing the same source. Define
+\[
+P1_{ij}=\PhiR(r_i,r_j),
+\]
+\[
+P2_{ij}=\PhiR(r_i,r_{i+j}),
+\]
+\[
+P3_{ij}=\PsiI(P1_{ij},P2_{ij}).
+\]
+The central condition is
+\[
+\boxed{\PsiI(\PhiR(a,b),\PhiR(a,c))=\PhiR(b,c).}
+\]
+When this holds, \(P3\) recovers the relation from \(b\) to \(c\). In the tested constructions this produces
+\[
+\boxed{P3=P2^T.}
+\]
+
+\section{The Group Theorem}
+
+\begin{definition}[Group relation]
+Let \(G\) be a group. Define
+\[
+\PhiR(A,B)=A^{-1}B,\qquad \PsiI(X,Y)=X^{-1}Y.
+\]
+\end{definition}
+
+\begin{theorem}[Shared-origin cancellation]
+For every \(A,B,C\in G\),
+\[
+\PsiI(\PhiR(A,B),\PhiR(A,C))=\PhiR(B,C).
+\]
+\end{theorem}
+
+\begin{proof}
+By definition,
+\[
+\PsiI(\PhiR(A,B),\PhiR(A,C))=(A^{-1}B)^{-1}(A^{-1}C).
+\]
+Since \((A^{-1}B)^{-1}=B^{-1}A\), this becomes
+\[
+(B^{-1}A)(A^{-1}C)=B^{-1}C=\PhiR(B,C).
+\]
+\end{proof}
+
+In plain language:
+\[
+\boxed{A\to B,\quad A\to C\quad\Rightarrow\quad B\to C.}
+\]
+
+\section{The Groupoid Form}
+
+A groupoid is closer to local geometry because it has many objects and partially defined composition. Let
+\[
+f:A\to B,\qquad g:A\to C.
+\]
+Then
+\[
+f^{-1}:B\to A
+\]
+and
+\[
+g\circ f^{-1}:B\to C.
+\]
+Thus the groupoid form of \HA{} is
+\[
+\boxed{(A\to C)\circ(A\to B)^{-1}=B\to C.}
+\]
+This is the natural language of local charts, coordinate frames, transition maps, and gauge patches.
+
+\section{Evidence Already Obtained}
+
+\subsection{Modular displacement}
+For
+\[
+\PhiR(a,b)=(b-a)\bmod m,\qquad \PsiI(x,y)=(y-x)\bmod m,
+\]
+the closure law is
+\[
+P1+P3=P2\pmod m.
+\]
+Tests across moduli \(2\) through \(8\) and sequence lengths up to \(5\) validated \(72{,}079\) total sequences.
+
+\subsection{Ratio and complex phase}
+For nonzero values,
+\[
+\PhiR(a,b)=\frac{b}{a},\qquad \PsiI(x,y)=\frac{y}{x}.
+\]
+The closure law is
+\[
+P1\cdot P3=P2.
+\]
+For unit complex phases \(z_k=e^{i\theta_k}\),
+\[
+\frac{z_b}{z_a}=e^{i(\theta_b-\theta_a)}.
+\]
+Thus \HA{} maps phase difference. A \(500\)-trial random unit-circle phase test produced zero failures above tolerance.
+
+\subsection{Complex amplitude-phase waves}
+For
+\[
+z_k=A_ke^{i\theta_k},
+\]
+the ratio \(z_b/z_a\) carries amplitude ratio and phase difference. The complex amplitude-phase test produced:
+\[
+\text{transpose error}=7.4476\times 10^{-16},
+\]
+\[
+\text{closure error}=4.9651\times 10^{-16},
+\]
+with \(300\) random trials and zero failures.
+
+\subsection{Near-zero boundary}
+Complex ratio requires \(a\ne0\). As \(|a|\to0\),
+\[
+\left|\frac{b}{a}\right|=\frac{|b|}{|a|}
+\]
+can become large. The near-zero sweep showed increasing relation magnitude and increasing floating-point error, but no algebraic failure where the operation remained defined. The boundary statement is:
+\[
+\boxed{\text{complex ratio re-anchoring is exact on }\mathbb{C}^{\times}\text{ and ill-conditioned near zero-amplitude anchors.}}
+\]
+
+\subsection{Matrix transformations}
+For invertible matrices,
+\[
+\PhiR(A,B)=A^{-1}B.
+\]
+A \(500\)-trial matrix transformation test produced zero failures above tolerance. The correct order \(P1P3=P2\) passed, while the wrong order \(P3P1=P2\) failed, showing that the law is order-sensitive and not a commutative accident.
+
+\subsection{Permutation groups}
+An exact finite permutation test produced:
+\[
+1000\text{ trials},\quad 0\text{ transpose failures},\quad 0\text{ ordered-closure failures}.
+\]
+The wrong order never produced a full-field pass.
+
+\subsection{Exhaustive symmetric groups}
+The core identity was checked over every triple in \(S_3,S_4,S_5\):
+\[
+216+13{,}824+1{,}728{,}000=1{,}742{,}040
+\]
+exact noncommutative triples, with zero failures.
+
+\subsection{Non-invertible boundary}
+For arbitrary finite functions, many triples were undefined because inverse did not exist. For \(n=4\), \(16{,}777{,}216\) function triples were considered; only \(147{,}456\) were fully defined; failures when defined were zero. Thus:
+\[
+\boxed{\text{when inverse exists, the law holds; when inverse does not exist, the operation is generally undefined.}}
+\]
+
+\subsection{Cayley-table group suite}
+The law was tested in \(C_5,C_8,V_4,D_3,D_4,D_5,Q_8\). Every group had zero failures. Abelian groups had wrong-order match fraction \(1\), while noncommutative groups had wrong-order match fraction \(<1\), as expected.
+
+\subsection{Groupoids}
+Finite pair groupoids with \(2,3,4,5,8,12\) objects had zero valid re-anchoring failures. Arbitrary composition became sparse as object count increased. For \(12\) objects, only \(1/12\) of arbitrary arrow pairs were composable. This confirms the importance of partial composition.
+
+\subsection{Atlas cocycle}
+For chart frames \(T_i\),
+\[
+G_{ij}=T_i^{-1}T_j.
+\]
+A consistent atlas satisfies
+\[
+G_{ij}G_{jk}=G_{ik},
+\]
+and \HA{} gives
+\[
+G_{ij}^{-1}G_{ik}=G_{jk}.
+\]
+Clean synthetic atlases had residuals near \(10^{-15}\) to \(10^{-14}\). Perturbed atlases produced residuals of order \(1\), detecting inconsistency.
+
+\subsection{Atlas residual localization}
+Residual triangles voted for participating transition edges. In one \(12\)-chart test with \(16\) corrupted edges:
+\[
+\text{top }16\text{ found }15/16,\qquad \text{top }20\text{ found }16/16.
+\]
+The top \(15\) suspicious edges were all true positives.
+
+\subsection{Robustness sweep}
+Across \(320\) synthetic atlas cases, localization remained strong. At high corruption density \(0.20\), top-\(m\) recall stayed around \(0.87\) to \(0.90\), while top-\(2m\) recall stayed around \(0.98\) to \(0.99\). This supports the operational statement:
+\[
+\boxed{\text{residual participation gives a robust localization signal across tested synthetic atlas regimes.}}
+\]
+
+\section{Gauge-Theoretic Translation}
+
+Let a graph or lattice have local frames \(T_i\). Define link variables
+\[
+U_{ij}=T_i^{-1}T_j.
+\]
+For a pure gauge field,
+\[
+U_{ij}U_{jk}=U_{ik}.
+\]
+The \HA{} re-anchoring law is
+\[
+U_{ij}^{-1}U_{ik}=U_{jk}.
+\]
+This is exactly the recovery of a transition map from two maps sharing a source frame.
+
+A local gauge transformation assigns \(h_i\in G\) to each site and transforms links by
+\[
+U_{ij}\mapsto h_i^{-1}U_{ij}h_j.
+\]
+The key physics question is whether \HA{} residuals are gauge-invariant, gauge-covariant, or transform by conjugation in a controlled way.
+
+\section{Curvature, Holonomy, and Plaquettes}
+
+On a lattice, a plaquette holonomy is
+\[
+W_{ijkl}=U_{ij}U_{jk}U_{kl}U_{li}.
+\]
+For a flat pure gauge field,
+\[
+W_{ijkl}=e.
+\]
+For a curved or inconsistent field,
+\[
+W_{ijkl}\ne e.
+\]
+Triangle residuals and plaquette holonomies should be compared. A core conjecture is that \HA{} residuals provide local flatness or consistency diagnostics related to discrete curvature.
+
+\section{Conjectures for the Physics Repository}
+
+\begin{conjecture}[Gauge covariance]
+Under
+\[
+U_{ij}\mapsto h_i^{-1}U_{ij}h_j,
+\]
+the \HA{} residuals transform invariantly or covariantly under the expected endpoint action.
+\end{conjecture}
+
+\begin{conjecture}[Flatness detection]
+If
+\[
+U_{ij}=T_i^{-1}T_j,
+\]
+then all triangle re-anchoring residuals vanish up to numerical precision.
+\end{conjecture}
+
+\begin{conjecture}[Curvature relation]
+For non-flat lattice gauge fields, \HA{} triangle residuals correlate with plaquette holonomy or discrete curvature magnitude.
+\end{conjecture}
+
+\begin{conjecture}[Fault localization]
+In sparse corrupted-link regimes, residual participation ranks corrupted links highly, with strong recall at top \(m\) or \(2m\).
+\end{conjecture}
+
+\begin{conjecture}[Domain boundary]
+The exact law requires invertible arrows. Non-invertible physics settings require a generalized inverse, quotient construction, relation semantics, or probabilistic reconstruction.
+\end{conjecture}
+
+\section{Proposed Repository Structure}
+
+\begin{verbatim}
+Her_Algorithm_Physics/
+|
+├── README.md
+├── requirements.txt
+├── src/
+│   └── her_reanchoring/
+│       ├── groups.py
+│       ├── groupoids.py
+│       ├── gauge_fields.py
+│       ├── residuals.py
+│       └── localization.py
+├── experiments/
+│   ├── 01_group_law_recap.py
+│   ├── 02_u1_lattice_gauge.py
+│   ├── 03_gauge_covariance.py
+│   ├── 04_su2_quaternion_links.py
+│   ├── 05_plaquette_holonomy.py
+│   ├── 06_fault_localization.py
+│   └── 07_clustered_faults.py
+├── outputs/
+│   ├── figures/
+│   └── tables/
+├── docs/
+├── paper/
+│   ├── main.tex
+│   └── references.bib
+└── tests/
+\end{verbatim}
+
+\section{Experiment Roadmap}
+
+\subsection{Experiment 1: Group law recap}
+Reproduce the theorem:
+\[
+(A^{-1}B)^{-1}(A^{-1}C)=B^{-1}C.
+\]
+
+\subsection{Experiment 2: \(U(1)\) lattice gauge field}
+Set
+\[
+U_{ij}=e^{i(\alpha_j-\alpha_i)}.
+\]
+Check
+\[
+U_{ij}^{-1}U_{ik}=U_{jk}.
+\]
+
+\subsection{Experiment 3: Gauge covariance}
+Apply
+\[
+U_{ij}\mapsto h_i^{-1}U_{ij}h_j
+\]
+and test how residuals transform.
+
+\subsection{Experiment 4: Quaternion or \(SU(2)\)-like links}
+Use unit quaternions to test compact non-Abelian link variables.
+
+\subsection{Experiment 5: Plaquette holonomy}
+Compute
+\[
+W=U_{ij}U_{jk}U_{kl}U_{li}
+\]
+and compare to \HA{} residuals.
+
+\subsection{Experiment 6: Curved versus flat fields}
+Generate pure gauge fields, controlled-curvature fields, and corrupted-link fields.
+
+\subsection{Experiment 7: Fault localization}
+Rank suspicious links by residual participation.
+
+\subsection{Experiment 8: Clustered faults}
+Test hub, target, and chain fault patterns.
+
+\subsection{Experiment 9: Non-invertible boundary}
+Test singular matrices, zero-amplitude points, and possible pseudoinverse extensions.
+
+\section{Claims and Boundaries}
+
+Supported claims:
+\begin{enumerate}[leftmargin=1.5em]
+\item \HA{} can be formulated as relational re-anchoring.
+\item The group law is exact.
+\item The law survives noncommutative groups.
+\item The exact domain requires inverse and composition.
+\item Groupoids naturally express local chart transitions.
+\item Synthetic atlas residuals can detect and localize inconsistency.
+\end{enumerate}
+
+Unsupported claims:
+\begin{enumerate}[leftmargin=1.5em]
+\item \HA{} is not yet a physical theory.
+\item It does not replace gauge theory.
+\item It does not solve quantum field theory.
+\item It has not yet been tested on real physics data.
+\item It does not automatically apply to non-invertible systems without extra structure.
+\end{enumerate}
+
+The right public posture is:
+\[
+\boxed{\text{This is a precise relational structure with promising gauge-theoretic tests.}}
+\]
+
+\section{Conclusion}
+
+The current work reveals a simple mathematical heart:
+\[
+(A^{-1}B)^{-1}(A^{-1}C)=B^{-1}C.
+\]
+The computational evidence shows this identity in binary, modular, complex, matrix, group, groupoid, and atlas settings. The atlas tests show that the same structure can detect and localize inconsistency in synthetic chart-transition systems.
+
+The new physics repository should investigate \HA{} as a finite gauge-theoretic diagnostic: a method for testing transition consistency, gauge covariance, holonomy, curvature, and corrupted-link localization.
+
+The central statement is:
+\[
+\boxed{\text{\HA{} maps how relations change when the origin changes.}}
+\]
+The physics question is:
+\[
+\boxed{\text{How far does that re-anchoring principle reach inside gauge fields?}}
+\]
+
+\bibliographystyle{plain}
+\bibliography{references}
+\end{document}
