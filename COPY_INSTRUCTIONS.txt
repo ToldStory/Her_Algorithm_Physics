@@ -1,0 +1,28 @@
+SU(2) curvature scaling layer copy instructions
+
+1. Unzip this package.
+2. Open the inner folder named Her_Algorithm_Physics_working.
+3. Copy the contents of that inner folder into your local repo root:
+
+   C:\Users\wyone\OneDrive\Documents\GitHub\Her_Algorithm_Physics
+
+4. Do not copy these files into the paper/ folder.
+5. From the repo root, run:
+
+   python -m pytest
+   python experiments/06_su2_curvature_scaling_limit.py
+
+Expected test result:
+
+   31 passed
+
+Then commit directly to main:
+
+   git add .
+   git commit -m "Add SU2 curvature scaling limit experiment"
+   git push origin main
+
+Then lock the milestone:
+
+   git tag -a v0.5.0-su2-curvature-scaling -m "Locked SU2 curvature scaling limit layer"
+   git push origin v0.5.0-su2-curvature-scaling

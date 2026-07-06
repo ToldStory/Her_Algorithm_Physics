@@ -52,3 +52,24 @@ Tests:
 Critical boundary:
 
 This does not prove Her residuals are literally curvature. It proves that, after reconstructing plaquette holonomy from Her residuals, the resulting plaquette diagnostic has the expected smooth U(1) curvature scaling behavior.
+
+
+## 06. SU(2) curvature scaling limit
+
+Goal:
+
+Test whether Her-reconstructed plaquette holonomy obeys the standard small-area SU(2) curvature scaling law when links are sampled from a smooth synthetic non-Abelian gauge potential.
+
+Tests:
+
+- smooth SU(2) connection represented by Pauli-vector fields,
+- midpoint-sampled SU(2) links,
+- principal logarithm vectors `log(W_square)/h^2`,
+- comparison against analytic non-Abelian curvature including the commutator term,
+- estimated convergence under lattice refinement,
+- exact Her reconstruction of plaquette holonomy,
+- SU(2) plaquette covariance and trace invariance under local gauge transformations.
+
+Critical boundary:
+
+This still does not prove that Her residuals are literally curvature in all settings. It proves that, after reconstructing plaquette holonomy from Her residuals, the resulting non-Abelian plaquette diagnostic has the expected smooth SU(2) small-area curvature behavior in a controlled synthetic test.

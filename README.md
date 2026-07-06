@@ -134,7 +134,7 @@ This tests:
 
 - smooth synthetic U(1) midpoint-sampled links,
 - plaquette angle scaling against analytic curvature \(F_{xy}\),
-- convergence of \(rg(W_\square)/h^2\) toward \(F_{xy}\) under lattice refinement,
+- convergence of \(\arg(W_\square)/h^2\) toward \(F_{xy}\) under lattice refinement,
 - exact Her reconstruction of the same plaquette holonomy,
 - gauge invariance of the U(1) plaquette diagnostic.
 
@@ -148,6 +148,36 @@ outputs/figures/curvature_scaling_limit.png
 Safe claim:
 
 > Her residuals reconstruct plaquette holonomy, and in this synthetic U(1) refinement test the reconstructed plaquette holonomy follows the expected curvature-times-area scaling.
+
+## Fifth experiment: SU(2) curvature scaling limit
+
+Work directly on `main` after confirming the current baseline passes tests.
+
+Run:
+
+```bash
+python experiments/06_su2_curvature_scaling_limit.py
+```
+
+This tests:
+
+- smooth synthetic SU(2) midpoint-sampled links,
+- principal logarithm vectors `log(W_square)/h^2` against analytic non-Abelian curvature,
+- inclusion of the SU(2) commutator term in the analytic target,
+- convergence of the plaquette diagnostic under lattice refinement, including the non-Abelian basepoint subtlety,
+- exact Her reconstruction of the same plaquette holonomy,
+- SU(2) plaquette covariance and trace invariance under local gauge transformations.
+
+Outputs:
+
+```text
+outputs/tables/su2_curvature_scaling_limit_summary.csv
+outputs/figures/su2_curvature_scaling_limit.png
+```
+
+Safe claim:
+
+> Her residuals reconstruct non-Abelian plaquette holonomy, and in this synthetic SU(2) refinement test the reconstructed plaquette holonomy follows the expected curvature-times-area scaling. The raw Lie-algebra vector comparison converges, while the conjugacy-invariant norm diagnostic shows near-second-order scaling and includes the commutator contribution to curvature.
 
 ## What this repo is
 
