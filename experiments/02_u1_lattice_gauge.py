@@ -12,10 +12,13 @@ Outputs:
 from __future__ import annotations
 
 import csv
+import sys
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
+
+sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "src"))
 
 from her_reanchoring.u1_gauge import (
     angle_errors,

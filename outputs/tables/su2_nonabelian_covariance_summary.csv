@@ -1,0 +1,14 @@
+case,n_sites,n_triangles_ordered,max_frobenius_error,mean_frobenius_error,max_rotation_angle_rad,mean_rotation_angle_rad,max_unitarity_error,max_det_error
+pure_gauge,10,720,9.672824153084046e-16,3.634326635085353e-16,0.0,0.0,1.9042742965464053e-15,1.3368855554576669e-15
+pure_gauge_after_local_gauge_transform,10,720,1.815329079992206e-15,6.224799728767122e-16,0.0,0.0,3.628539596416862e-15,2.55351295663786e-15
+perturbed_sparse_links,10,720,0.5455463887843811,0.10793260810528407,0.7763847609497703,0.15332345460747163,2.0480439737569825e-15,1.4433566506043034e-15
+perturbed_after_local_gauge_transform,10,720,0.5455463887843811,0.10793260810528425,0.7763847609497737,0.15332345460747224,3.179846746215691e-15,2.3329547837106334e-15
+,,,,,,,,
+covariance_error_pure,,,1.3337663019934496e-15,,,,,
+covariance_error_perturbed,,,1.2716627266667946e-15,,,,,
+literal_residual_matrix_change_perturbed,,,1.033721284851859,,,,,
+trace_invariance_error_perturbed,,,2.220446049250313e-15,,,,,
+"corruption_edge_(0, 1)",,,,,0.7203572911868645,,,
+"corruption_edge_(2, 5)",,,,,0.3231434782925795,,,
+"corruption_edge_(3, 7)",,,,,0.47996628868285907,,,
+"corruption_edge_(6, 9)",,,,,-0.7763847609497683,,,

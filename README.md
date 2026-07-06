@@ -45,7 +45,7 @@ pytest
 Run the first experiment:
 
 ```bash
-PYTHONPATH=src python experiments/02_u1_lattice_gauge.py
+python experiments/02_u1_lattice_gauge.py
 ```
 
 This tests:
@@ -62,6 +62,38 @@ Outputs:
 ```text
 outputs/tables/u1_gauge_reanchoring_summary.csv
 outputs/figures/u1_perturbed_residual_histogram.png
+```
+
+
+## Second experiment: SU(2) non-Abelian covariance
+
+After locking the U(1) baseline, create and work on:
+
+```bash
+git checkout -b investigate/su2-nonabelian-covariance
+```
+
+Run:
+
+```bash
+python experiments/03_su2_nonabelian_covariance.py
+```
+
+This tests:
+
+- pure-gauge SU(2) links \(U_{ij}=G_i^{-1}G_j\),
+- non-Abelian re-anchoring \(U_{ij}^{-1}U_{ik}=U_{jk}\),
+- residuals \(R_{ijk}=U_{ij}^{-1}U_{ik}U_{jk}^{-1}\),
+- covariance \(R'_{ijk}=H_j^{-1}R_{ijk}H_j\),
+- failure of literal matrix invariance for generic non-Abelian residuals,
+- trace / rotation-angle invariance under conjugation,
+- sparse perturbed-link localization by residual participation.
+
+Outputs:
+
+```text
+outputs/tables/su2_nonabelian_covariance_summary.csv
+outputs/figures/su2_perturbed_residual_histogram.png
 ```
 
 ## What this repo is
