@@ -119,6 +119,36 @@ Outputs:
     outputs/tables/plaquette_holonomy_comparison_summary.csv
     outputs/figures/u1_su2_plaquette_angles.png
 
+
+## Fourth experiment: curvature scaling limit
+
+Work directly on `main` after confirming the current baseline passes tests.
+
+Run:
+
+```bash
+python experiments/05_curvature_scaling_limit.py
+```
+
+This tests:
+
+- smooth synthetic U(1) midpoint-sampled links,
+- plaquette angle scaling against analytic curvature \(F_{xy}\),
+- convergence of \(rg(W_\square)/h^2\) toward \(F_{xy}\) under lattice refinement,
+- exact Her reconstruction of the same plaquette holonomy,
+- gauge invariance of the U(1) plaquette diagnostic.
+
+Outputs:
+
+```text
+outputs/tables/curvature_scaling_limit_summary.csv
+outputs/figures/curvature_scaling_limit.png
+```
+
+Safe claim:
+
+> Her residuals reconstruct plaquette holonomy, and in this synthetic U(1) refinement test the reconstructed plaquette holonomy follows the expected curvature-times-area scaling.
+
 ## What this repo is
 
 A careful mathematical and computational investigation of:
@@ -134,5 +164,3 @@ A careful mathematical and computational investigation of:
 ## What this repo is not
 
 This repo does not claim Her Algorithm is already a complete physical theory. It does not replace gauge theory. It is not yet validated on real physics data.
-
-We have not shown that Her Algorithm is curvature itself. We have shown that its triangle re-anchoring residual is compatible with lattice-gauge plaquette holonomy and can reconstruct plaquette Wilson-loop data when the square is decomposed into triangles.

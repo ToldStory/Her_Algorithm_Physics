@@ -33,3 +33,22 @@ Tests:
 Critical boundary:
 
 This does not prove that the Her residual is curvature. It proves that Her residuals are exactly compatible with plaquette holonomy after diagonal splitting, basepoint transport, and inversion bookkeeping.
+
+
+## 05. Curvature scaling limit
+
+Goal:
+
+Test whether Her-reconstructed plaquette holonomy obeys the standard small-area U(1) curvature scaling law when links are sampled from a smooth synthetic vector potential.
+
+Tests:
+
+- constant curvature field \(A=(0,Bx)\) produces plaquette angle density \(B\),
+- nonconstant smooth field converges under lattice refinement,
+- estimated log-log error slope is positive and near second order for midpoint links,
+- Her-reconstructed plaquette holonomy matches ordinary plaquette holonomy,
+- U(1) plaquette values remain gauge-invariant under local phase changes.
+
+Critical boundary:
+
+This does not prove Her residuals are literally curvature. It proves that, after reconstructing plaquette holonomy from Her residuals, the resulting plaquette diagnostic has the expected smooth U(1) curvature scaling behavior.
