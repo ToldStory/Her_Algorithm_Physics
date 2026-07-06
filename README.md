@@ -111,3 +111,5 @@ A careful mathematical and computational investigation of:
 ## What this repo is not
 
 This repo does not claim Her Algorithm is already a complete physical theory. It does not replace gauge theory. It is not yet validated on real physics data.
+
+We have not shown that Her Algorithm is curvature itself. We have shown that its triangle re-anchoring residual is compatible with lattice-gauge plaquette holonomy and can reconstruct plaquette Wilson-loop data when the square is decomposed into triangles.
