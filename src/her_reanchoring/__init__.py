@@ -39,3 +39,32 @@ __all__ = [
     "triangle_residual",
     "triangle_residuals",
 ]
+
+
+from .su2_gauge import (
+    MatrixResidualSummary,
+    dagger,
+    det_errors,
+    random_su2,
+    random_su2_stack,
+    residual_covariance_error as su2_residual_covariance_error,
+    residual_literal_change as su2_residual_literal_change,
+    residual_trace_invariance_error as su2_residual_trace_invariance_error,
+    su2_axis_angle,
+    su2_rotation_angles,
+    unitarity_errors,
+)
+
+__all__ += [
+    "MatrixResidualSummary",
+    "dagger",
+    "det_errors",
+    "random_su2",
+    "random_su2_stack",
+    "su2_residual_covariance_error",
+    "su2_residual_literal_change",
+    "su2_residual_trace_invariance_error",
+    "su2_axis_angle",
+    "su2_rotation_angles",
+    "unitarity_errors",
+]
