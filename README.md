@@ -96,6 +96,29 @@ outputs/tables/su2_nonabelian_covariance_summary.csv
 outputs/figures/su2_perturbed_residual_histogram.png
 ```
 
+
+## Third experiment: plaquette / holonomy comparison
+
+After locking the SU(2) covariance layer, create and work on:
+
+    git checkout -b investigate/plaquette-holonomy-comparison
+
+Run:
+
+    python experiments/04_plaquette_holonomy_comparison.py
+
+This tests:
+  * standard square plaquette holonomy W_abcd = U_ab U_bc U_cd U_da,
+  * exact diagonal factorization W_abcd = H_abc H_acd,
+  * relation between Her residuals and triangular holonomy,
+  * reconstruction of plaquette holonomy from Her residuals,
+  * U(1) plaquette gauge invariance,
+  * SU(2) plaquette gauge covariance and trace invariance.
+
+Outputs:
+    outputs/tables/plaquette_holonomy_comparison_summary.csv
+    outputs/figures/u1_su2_plaquette_angles.png
+
 ## What this repo is
 
 A careful mathematical and computational investigation of:
