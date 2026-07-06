@@ -164,3 +164,152 @@ A careful mathematical and computational investigation of:
 ## What this repo is not
 
 This repo does not claim Her Algorithm is already a complete physical theory. It does not replace gauge theory. It is not yet validated on real physics data.
+
+Established Results
+
+This repository investigates Her Algorithm as a discrete relational re-anchoring structure for group-valued fields. The central algebraic identity is exact: for group elements a,b,c∈G, the relational differences
+
+ϕ(a,b)=a
+−1
+b,ϕ(a,c)=a
+−1
+c
+
+satisfy
+
+ϕ(a,b)
+−1
+ϕ(a,c)=b
+−1
+c.
+
+Thus, a common origin or anchor a cancels without requiring commutativity. This makes the construction naturally compatible with both Abelian and non-Abelian settings.
+
+The work in this repository does not claim that Her Algorithm is a new physical theory. Instead, it establishes a sequence of concrete mathematical and computational facts showing that the re-anchoring identity behaves correctly inside lattice-gauge-style systems.
+
+1. U(1) Gauge Re-Anchoring
+
+The first experiment implements Her re-anchoring in a finite U(1) lattice-gauge setting. For pure gauge fields, the re-anchoring residual vanishes to numerical precision. When sparse synthetic perturbations are introduced, the residual becomes nonzero and localizes the affected relational inconsistencies.
+
+Because U(1) is Abelian, the residual diagnostics are gauge-invariant under local U(1) transformations.
+
+Established statement:
+
+In finite U(1) link fields, Her re-anchoring defines a triangle consistency residual that vanishes for pure gauges, detects synthetic perturbations, and remains invariant under local gauge transformations.
+
+2. SU(2) Non-Abelian Covariance
+
+The second experiment extends the construction to SU(2), where multiplication is noncommutative. This is a stronger test because residual matrices are not expected to remain literally unchanged under local gauge transformations.
+
+The result confirms the expected non-Abelian behavior: the residual transforms covariantly by conjugation, while conjugacy-invariant diagnostics such as trace, Frobenius distance from identity, and rotation angle remain invariant.
+
+Established statement:
+
+In finite SU(2) link fields, Her re-anchoring defines a non-Abelian triangle consistency residual. The residual vanishes for pure gauges and transforms covariantly under local SU(2) gauge transformations. Its conjugacy-invariant observables remain gauge-invariant.
+
+This distinguishes the SU(2) case from the U(1) case. In U(1), residuals are literally invariant. In SU(2), the residual matrices may change substantially, but they change in the mathematically correct way.
+
+3. Plaquette and Holonomy Compatibility
+
+The third experiment compares Her triangle residuals with standard lattice-gauge plaquette holonomy.
+
+For a square plaquette with vertices a,b,c,d, the standard plaquette holonomy is
+
+W
+abcd
+	​
+
+=U
+ab
+	​
+
+U
+bc
+	​
+
+U
+cd
+	​
+
+U
+da
+	​
+
+.
+
+When the square is split into two triangles along a diagonal, the corresponding triangular holonomies reconstruct the square plaquette holonomy:
+
+W
+abcd
+	​
+
+=H
+abc
+	​
+
+H
+acd
+	​
+
+.
+
+Her residuals are not identical to plaquette curvature by themselves. Rather, they are basepoint-shifted and inverted triangle consistency residuals. With correct inversion and basepoint bookkeeping, they reconstruct the triangular holonomies, and therefore reconstruct the plaquette holonomy.
+
+Established statement:
+
+Her triangle residuals are plaquette-compatible. When a square plaquette is decomposed into two triangles, Her residuals reconstruct the standard plaquette holonomy up to numerical precision, after inversion and basepoint bookkeeping.
+
+This result is important because it clarifies the relationship between Her re-anchoring and lattice gauge theory. The residual is not merely an arbitrary defect score. It is structurally compatible with Wilson-loop / plaquette holonomy.
+
+4. Curvature Scaling Limit
+
+The fourth experiment tests whether the Her-reconstructed plaquette holonomy behaves like a curvature diagnostic under lattice refinement.
+
+A smooth synthetic U(1) connection is generated on increasingly fine lattices. The plaquette angle divided by the lattice area is compared against the analytic curvature F
+xy
+	​
+
+. The observed log-log convergence slope is approximately
+
+1.995,
+
+which is essentially second-order convergence.
+
+Established statement:
+
+In a smooth synthetic U(1) connection, the Her-reconstructed plaquette holonomy reproduces the expected curvature-times-area behavior under lattice refinement, with approximately second-order convergence.
+
+This is the strongest result so far. It shows that the construction is not only algebraically compatible with plaquette holonomy, but also behaves correctly in a smooth curvature-scaling test.
+
+Current Claim Boundary
+
+The repository currently supports the following disciplined claim:
+
+Her Algorithm is an exact relational re-anchoring identity for group-valued data. In lattice-gauge-style systems, this identity defines triangle consistency residuals that vanish on pure gauges, detect perturbations, transform correctly under local gauge transformations, reconstruct plaquette holonomy, and reproduce expected curvature-times-area scaling in a smooth U(1) refinement test.
+
+The repository does not yet claim:
+
+Her Algorithm is a new physical law.
+
+Nor does it claim:
+
+Her residuals are literally curvature in all settings.
+
+The safer and currently supported statement is:
+
+Her re-anchoring is a gauge-compatible relational diagnostic. Through plaquette reconstruction, it can reproduce standard lattice-gauge holonomy behavior and, in the tested U(1) case, the expected curvature scaling limit.
+
+Verified Test State
+
+The current codebase contains tests for:
+
+U(1) gauge re-anchoring
+SU(2) non-Abelian covariance
+Plaquette / holonomy reconstruction
+Curvature scaling limit
+
+The current validated test state is:
+
+25 passed
+
+This means the project has moved beyond informal analogy. It now contains a reproducible computational sequence supporting precise claims about relational re-anchoring, gauge covariance, plaquette compatibility, and curvature scaling behavior.
